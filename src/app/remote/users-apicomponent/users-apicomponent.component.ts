@@ -1,5 +1,6 @@
 import { RestApiUsersServiceService } from './../../services/rest-api-users-service.service';
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-users-apicomponent',
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class UsersAPIComponentComponent implements OnInit {
 
   allUsers: any
-  constructor(private userService: RestApiUsersServiceService) { }
+  constructor(private userService: RestApiUsersServiceService,private router:Router) { }
 
   ngOnInit() {
     this.getAPIData()
@@ -37,13 +38,23 @@ export class UsersAPIComponentComponent implements OnInit {
     postUser(){
       this.userService.createUser(this.user).subscribe((response)=>{
         console.log(response);
+        this.userService.getRemoteusers().subscribe((response)=>{
+          this.allUsers=response;
+        })
       }
       )
   }
 deleteUser(id){
     this.userService.deleteUser(id).subscribe((response)=>{
         console.log(response);
-      }
-      )
-  }
+        this.userService.getRemoteusers().subscribe((response)=>{
+          this.allUsers=response;
+        })
+      
+    })
 }
+
+viewDetail(id){
+  console.log(id)
+  this.router.navigate(["/remoteData",id])
+}}

@@ -1,30 +1,32 @@
-  <p>
+<p>
   users-apicomponent works!
 </p>
-<ol>
-<li *ngFor="let user of allUsers">{{user.name}}</li>
-
-</ol>
-
-Real Time Search :
+Real Time Search: 
 <input type="text" [(ngModel)]="searchString" autofocus> {{searchString}}
 <br>
 <br>
-<table>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Co-ordinates</th>
+    </tr>
+  </thead>
+<tbody>
   <tr *ngFor="let user of allUsers | autoSearchPipe:searchString">
     <td>{{user.id}}</td>
     <td>{{user.name}}</td>
     <td>{{user.email}}</td>
-    <td>{{user.address.geo.lat + " ," + u.address.geo.lng}}</td>
-  <td><button click="deleteUser(user.id)"> create </button></td>
+    <td>{{user.address.geo.lat + ", " + user.address.geo.lng}}</td>
+    <td><button (click)="deleteUser(user.id)">  Delete </button></td>
+    <td><button (click)="viewDetail(user.id)"> Detail </button></td>
   </tr>
-  
-</table> 
+</tbody>
+</table>
 
 <br>
 <br>
-<button click="postUser()"> create </button>
-<br>
-<br>
-
-
+<button (click)="postUser()">Create</button>
